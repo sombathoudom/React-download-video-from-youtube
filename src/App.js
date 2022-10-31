@@ -11,7 +11,7 @@ function App() {
   
   useEffect(() => {
     handleData(query);
-  },[]);
+  });
 
   const handleData = async() => {
     const data = await fetchYoutubeSearch(query);
