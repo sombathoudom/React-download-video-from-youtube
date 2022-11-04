@@ -4,16 +4,19 @@ import { downloadYoutubeToMp3 } from './api/DownloadApi.js';
 import './App.css';
 
 function App() {
-  const [query, setQuery] = useState('Vanda');
+  const [query, setQuery] = useState('Vannda');
   const [Music,setYoutubeMusic] = useState([]);
-  const [buttonText, setButtonText] = useState('Downloading');
+  const [buttonText, setButtonText] = useState('Downloading...');
   const [loading, setLoading] = useState('');
-  
+  const [request, setRequest] = useState(false);
   useEffect(() => {
-    handleData(query);
-  });
+    if(request === false) {
+      handleData(query);
+      setRequest(true);
+    }
+  },[query,request]);
 
-  const handleData = async() => {
+  const handleData = async (query) => {
     const data = await fetchYoutubeSearch(query);
     setYoutubeMusic(data);
     setQuery('');
@@ -24,9 +27,10 @@ function App() {
       handleData(query);
     }
   }
-  const clickDownload = async(e) => {
+  const clickDownload = async (e) => {
     e.preventDefault();
     setLoading(e.target.value);
+    setButtonText('Downloading...')
     const data =  await downloadYoutubeToMp3(e.target.value);
     if(data) {
       window.open(data?.result?.download_url, '_blank', 'noopener,noreferrer');
