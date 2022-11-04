@@ -9,5 +9,5 @@ npm install
 ``` 
 ### Start Project :star_struck::star_struck:
 ```
-npm run 
+npm start 
 ```
